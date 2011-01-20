@@ -39,6 +39,8 @@ import android.telephony.PhoneNumberUtils;
 import android.telephony.ServiceState;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
@@ -89,6 +91,8 @@ public class NotificationMgr implements CallerInfoAsyncQuery.OnQueryCompleteList
     private boolean mShowingSpeakerphoneIcon;
     private boolean mShowingMuteIcon;
 
+    private ImageView mStatusBarEndCall;
+    
     // used to track the missed call counter, default to 0.
     private int mNumberMissedCalls = 0;
 
@@ -591,6 +595,11 @@ public class NotificationMgr implements CallerInfoAsyncQuery.OnQueryCompleteList
         // the current Connection.
         RemoteViews contentView = new RemoteViews(mContext.getPackageName(),
                                                    R.layout.ongoing_call_notification);
+        
+        
+        //Trying to add end call button to ongoing call notification.
+        //mStatusBarEndCall = (ImageView) findViewById(R.id.notification_end_button);
+        
         contentView.setImageViewResource(R.id.icon, expandedViewIcon);
 
         // if the connection is valid, then build what we need for the
