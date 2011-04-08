@@ -18,7 +18,6 @@ package com.android.phone;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.media.AudioManager;
 import android.os.SystemClock;
 import android.provider.Settings;
 import android.util.AttributeSet;
@@ -37,8 +36,8 @@ import android.widget.ToggleButton;
 
 import com.android.internal.telephony.Call;
 import com.android.internal.telephony.Phone;
-import com.android.internal.widget.RotarySelector;
 import com.android.internal.widget.SlidingTab;
+import com.android.internal.widget.RotarySelector;
 import com.android.internal.telephony.CallManager;
 
 
@@ -65,10 +64,9 @@ public class InCallTouchUi extends FrameLayout
     private PhoneApp mApplication;
 
     // UI containers / elements
-    private SlidingTab mIncomingCallWidget;  // UI used for an incoming call
-    private RotarySelector mIncomingCallWidgetRotary; // Added for Rotary Lockscreen option.
-    private boolean mUseRotaryLockScreen = false;
-    
+    private SlidingTab mIncomingSlidingTabCallWidget;  // UI used for an incoming call
+    private RotarySelector mIncomingRotarySelectorCallWidget;  // UI used for an incoming call
+
     private View mInCallControls;  // UI elements while on a regular call
     //
     private Button mAddButton;
@@ -92,7 +90,6 @@ public class InCallTouchUi extends FrameLayout
     private Drawable mUnholdIcon;
     private Drawable mShowDialpadIcon;
     private Drawable mHideDialpadIcon;
-    private Context mContext;
 
     // Time of the most recent "answer" or "reject" action (see updateState())
     private long mLastIncomingCallActionTime;  // in SystemClock.uptimeMillis() time base
@@ -103,17 +100,26 @@ public class InCallTouchUi extends FrameLayout
 
     private CallFeaturesSetting mSettings;
 
+    // Look up the various UI elements.
+    private int mLockscreenStyle = (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.LOCKSCREEN_STYLE, 2));
+
+    private boolean mUseTabsLockscreen = (mLockscreenStyle == 1);
+    private boolean mUseRotaryLockscreen = (mLockscreenStyle == 2);
+
     public InCallTouchUi(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mContext = context;
 
-        
         if (DBG) log("InCallTouchUi constructor...");
         if (DBG) log("- this = " + this);
         if (DBG) log("- context " + context + ", attrs " + attrs);
 
         // Inflate our contents, and add it (to ourself) as a child.
-        UpdateUI();
+        LayoutInflater inflater = LayoutInflater.from(context);
+        inflater.inflate(
+                R.layout.incall_touch_ui,  // resource
+                this,                      // root
+                true);
 
         mApplication = PhoneApp.getInstance();
 
@@ -128,11 +134,11 @@ public class InCallTouchUi extends FrameLayout
         if (DBG) log("- regular in-call touch UI: "
                      + (mAllowInCallTouchUi ? "ENABLED" : "DISABLED"));
         //mSettings = CallFeaturesSetting.getInstance(android.preference.PreferenceManager.getDefaultSharedPreferences(context));
- 
     }
 
     void setInCallScreenInstance(InCallScreen inCallScreen) {
         mInCallScreen = inCallScreen;
+
     }
 
     @Override
@@ -140,37 +146,34 @@ public class InCallTouchUi extends FrameLayout
         super.onFinishInflate();
         if (DBG) log("InCallTouchUi onFinishInflate(this = " + this + ")...");
 
-        // Look up the various UI elements.
-        if (mUseRotaryLockScreen) {
-        	mIncomingCallWidgetRotary = (RotarySelector) findViewById(R.id.incomingCallWidgetRotary);
-        	mIncomingCallWidgetRotary.setLeftHandleResource(R.drawable.ic_jog_dial_answer);
-        	mIncomingCallWidgetRotary.setRightHandleResource(R.drawable.ic_jog_dial_decline);
-        	
-        	
-        	mIncomingCallWidgetRotary.setOnDialTriggerListener(this);
-        	
-        } else {
         // "Dial-to-answer" widget for incoming calls.
-	        mIncomingCallWidget = (SlidingTab) findViewById(R.id.incomingCallWidget);
-	        mIncomingCallWidget.setLeftTabResources(
-	                R.drawable.ic_jog_dial_answer,
-	                com.android.internal.R.drawable.jog_tab_target_green,
-	                com.android.internal.R.drawable.jog_tab_bar_left_answer,
-	                com.android.internal.R.drawable.jog_tab_left_answer
-	                );
-	        mIncomingCallWidget.setRightTabResources(
-	                R.drawable.ic_jog_dial_decline,
-	                com.android.internal.R.drawable.jog_tab_target_red,
-	                com.android.internal.R.drawable.jog_tab_bar_right_decline,
-	                com.android.internal.R.drawable.jog_tab_right_decline
-	                );
-	
-	        // For now, we only need to show two states: answer and decline.
-	        mIncomingCallWidget.setLeftHintText(R.string.slide_to_answer_hint);
-	        mIncomingCallWidget.setRightHintText(R.string.slide_to_decline_hint);
-	
-	        mIncomingCallWidget.setOnTriggerListener(this);
-        }
+            mIncomingRotarySelectorCallWidget = (RotarySelector) findViewById(R.id.incomingRotarySelectorCallWidget);
+            mIncomingRotarySelectorCallWidget.setLeftHandleResource(R.drawable.ic_jog_dial_answer);
+            mIncomingRotarySelectorCallWidget.setRightHandleResource(R.drawable.ic_jog_dial_decline);
+            mIncomingRotarySelectorCallWidget.setOnDialTriggerListener(this);
+
+        // "slide-to-answer" widget for incoming calls.
+            mIncomingSlidingTabCallWidget = (SlidingTab) findViewById(R.id.incomingSlidingTabCallWidget);
+            mIncomingSlidingTabCallWidget.setLeftTabResources(
+                    R.drawable.ic_jog_dial_answer,
+                    com.android.internal.R.drawable.jog_tab_target_green,
+                    com.android.internal.R.drawable.jog_tab_bar_left_answer,
+                    com.android.internal.R.drawable.jog_tab_left_answer
+                    );
+            mIncomingSlidingTabCallWidget.setRightTabResources(
+                    R.drawable.ic_jog_dial_decline,
+                    com.android.internal.R.drawable.jog_tab_target_red,
+                    com.android.internal.R.drawable.jog_tab_bar_right_decline,
+                    com.android.internal.R.drawable.jog_tab_right_decline
+                    );
+
+            // For now, we only need to show two states: answer and decline.
+            mIncomingSlidingTabCallWidget.setLeftHintText(R.string.slide_to_answer_hint);
+            mIncomingSlidingTabCallWidget.setRightHintText(R.string.slide_to_decline_hint);
+
+            mIncomingSlidingTabCallWidget.setOnTriggerListener(this);
+        //}
+
         // Container for the UI elements shown while on a regular call.
         mInCallControls = findViewById(R.id.inCallControls);
 
@@ -244,39 +247,11 @@ public class InCallTouchUi extends FrameLayout
      * Updates the visibility and/or state of our UI elements, based on
      * the current state of the phone.
      */
-    void UpdateUI(){
-    	mUseRotaryLockScreen = (Settings.System.getInt(
-                mContext.getContentResolver(),
-                Settings.System.USE_ROTARY_LOCKSCREEN, 0) == 1
-                );
-    	
-    	LayoutInflater inflater = LayoutInflater.from(mContext);
-    	
-        if (mUseRotaryLockScreen) {
-        	Log.i("InCallTouchUI", "Using rotary lockscreen:");
-        	inflater.inflate(
-                    R.layout.incall_touch_ui_rotary,  // resource
-                    //mSettings.mLeftHand ? R.layout.incall_touch_ui_left_rotary : R.layout.incall_touch_ui_rotary,  // resource
-                    this,                      // root
-                    true);        
-        } else {
-        	Log.i("InCallTouchUI", "Using tab lockscreen:");
-        	inflater.inflate(
-                R.layout.incall_touch_ui,  // resource
-                //mSettings.mLeftHand ? R.layout.incall_touch_ui_left : R.layout.incall_touch_ui,  // resource
-                this,                      // root
-                true);
-        }
-	}
-    	
     void updateState(CallManager cm) {
-        if (DBG) log("updateState( CallManager" + cm + ")...");
-
         if (mInCallScreen == null) {
             log("- updateState: mInCallScreen has been destroyed; bailing out...");
             return;
         }
-
 
         Phone.State state = cm.getState();  // IDLE, RINGING, or OFFHOOK
         if (DBG) log("- updateState: CallManager state is " + state);
@@ -467,7 +442,7 @@ public class InCallTouchUi extends FrameLayout
             // Show the "hide dialpad" state.
             mDialpadButton.setText(R.string.onscreenHideDialpadText);
             mDialpadButton.setCompoundDrawablesWithIntrinsicBounds(
-                null, mHideDialpadIcon, null, null);
+                    null, mHideDialpadIcon, null, null);
         } else {
             // Show the "show dialpad" state.
             mDialpadButton.setText(R.string.onscreenShowDialpadText);
@@ -572,6 +547,68 @@ public class InCallTouchUi extends FrameLayout
     }
 
     //
+    // RotarySelector.OnDialTriggerListener implementation
+    //
+
+    /**
+     * Handles "Answer" and "Reject" actions for an incoming call.
+     * We get this callback from the RotarySelector
+     * when the user triggers an action.
+     *
+     * To answer or reject the incoming call, we call
+     * InCallScreen.handleOnscreenButtonClick() and pass one of the
+     * special "virtual button" IDs:
+     *   - R.id.answerButton to answer the call
+     * or
+     *   - R.id.rejectButton to reject the call.
+     */
+    public void onDialTrigger(View v, int whichHandle) {
+        log("onDialTrigger(whichHandle = " + whichHandle + ")...");
+
+        switch (whichHandle) {
+            case RotarySelector.OnDialTriggerListener.LEFT_HANDLE:
+                if (DBG) log("LEFT_HANDLE: answer!");
+
+                hideIncomingCallWidget();
+
+                // ...and also prevent it from reappearing right away.
+                // (This covers up a slow response from the radio; see updateState().)
+                mLastIncomingCallActionTime = SystemClock.uptimeMillis();
+
+                // Do the appropriate action.
+                if (mInCallScreen != null) {
+                    // Send this to the InCallScreen as a virtual "button click" event:
+                    mInCallScreen.handleOnscreenButtonClick(R.id.answerButton);
+                } else {
+                    Log.e(LOG_TAG, "answer trigger: mInCallScreen is null");
+                }
+                break;
+
+            case RotarySelector.OnDialTriggerListener.RIGHT_HANDLE:
+                if (DBG) log("RIGHT_HANDLE: reject!");
+
+                hideIncomingCallWidget();
+
+                // ...and also prevent it from reappearing right away.
+                // (This covers up a slow response from the radio; see updateState().)
+                mLastIncomingCallActionTime = SystemClock.uptimeMillis();
+
+                // Do the appropriate action.
+                if (mInCallScreen != null) {
+                    // Send this to the InCallScreen as a virtual "button click" event:
+                    mInCallScreen.handleOnscreenButtonClick(R.id.rejectButton);
+                } else {
+                    Log.e(LOG_TAG, "reject trigger: mInCallScreen is null");
+                }
+                break;
+
+            default:
+                Log.e(LOG_TAG, "onDialTrigger: unexpected whichHandle value: " + whichHandle);
+                break;
+        }
+
+    }
+    //
     // SlidingTab.OnTriggerListener implementation
     //
 
@@ -588,7 +625,7 @@ public class InCallTouchUi extends FrameLayout
      *   - R.id.rejectButton to reject the call.
      */
     public void onTrigger(View v, int whichHandle) {
-        log("onDialTrigger(whichHandle = " + whichHandle + ")...");
+        log("onTrigger(whichHandle = " + whichHandle + ")...");
 
         switch (whichHandle) {
             case SlidingTab.OnTriggerListener.LEFT_HANDLE:
@@ -632,177 +669,185 @@ public class InCallTouchUi extends FrameLayout
                 break;
         }
 
-        // Regardless of what action the user did, be sure to clear out
-        // the hint text we were displaying while the user was dragging.
-        mInCallScreen.updateSlidingTabHint(0, 0);
     }
 
-    public void onDialTrigger(View v, int whichHandle) {
-        switch (whichHandle) {
-        case RotarySelector.OnDialTriggerListener.LEFT_HANDLE:
-            if (DBG) log("LEFT_HANDLE: answer!");
-
-            hideIncomingCallWidget();
-
-            // ...and also prevent it from reappearing right away.
-            // (This covers up a slow response from the radio; see updateState().)
-            mLastIncomingCallActionTime = SystemClock.uptimeMillis();
-
-            // Do the appropriate action.
-            if (mInCallScreen != null) {
-                // Send this to the InCallScreen as a virtual "button click" event:
-                mInCallScreen.handleOnscreenButtonClick(R.id.answerButton);
-            } else {
-                Log.e(LOG_TAG, "answer trigger: mInCallScreen is null");
-            }
-            break;
-
-        case RotarySelector.OnDialTriggerListener.RIGHT_HANDLE:
-            if (DBG) log("RIGHT_HANDLE: reject!");
-
-            hideIncomingCallWidget();
-
-            // ...and also prevent it from reappearing right away.
-            // (This covers up a slow response from the radio; see updateState().)
-            mLastIncomingCallActionTime = SystemClock.uptimeMillis();
-
-            // Do the appropriate action.
-            if (mInCallScreen != null) {
-                // Send this to the InCallScreen as a virtual "button click" event:
-                mInCallScreen.handleOnscreenButtonClick(R.id.rejectButton);
-            } else {
-                Log.e(LOG_TAG, "reject trigger: mInCallScreen is null");
-            }
-            break;
-
-        default:
-            Log.e(LOG_TAG, "onDialTrigger: unexpected whichHandle value: " + whichHandle);
-            break;
-        }
-    }
-    
     /**
      * Apply an animation to hide the incoming call widget.
      */
     private void hideIncomingCallWidget() {
-    	if (!mUseRotaryLockScreen) {
-	        if (mIncomingCallWidget.getVisibility() != View.VISIBLE
-	                || mIncomingCallWidget.getAnimation() != null) {
-	            // Widget is already hidden or in the process of being hidden
-	            return;
-	        }
-	        // Hide the incoming call screen with a transition
-	        AlphaAnimation anim = new AlphaAnimation(1.0f, 0.0f);
-	        anim.setDuration(IN_CALL_WIDGET_TRANSITION_TIME);
-	        anim.setAnimationListener(new AnimationListener() {
-	
-	            public void onAnimationStart(Animation animation) {
-	
-	            }
-	
-	            public void onAnimationRepeat(Animation animation) {
-	
-	            }
-	
-	            public void onAnimationEnd(Animation animation) {
-	                // hide the incoming call UI.
-	                mIncomingCallWidget.clearAnimation();
-	                mIncomingCallWidget.setVisibility(View.GONE);
-	            }
-	        });
-	        mIncomingCallWidget.startAnimation(anim);
-    	} else {
-    		if(mIncomingCallWidgetRotary.getVisibility() != View.VISIBLE || mIncomingCallWidgetRotary.getAnimation() != null) {
-    			return;
-    		}
-	        AlphaAnimation anim = new AlphaAnimation(1.0f, 0.0f);
-	        anim.setDuration(IN_CALL_WIDGET_TRANSITION_TIME);
-	        anim.setAnimationListener(new AnimationListener() {
-	
-	            public void onAnimationStart(Animation animation) {
-	
-	            }
-	
-	            public void onAnimationRepeat(Animation animation) {
-	
-	            }
-	            public void onAnimationEnd(Animation animation) {
-	                // hide the incoming call UI.
-	                mIncomingCallWidgetRotary.clearAnimation();
-	                mIncomingCallWidgetRotary.setVisibility(View.GONE);
-	            }
-	        });
-	        mIncomingCallWidgetRotary.startAnimation(anim);
-    	}
+        if (mUseRotaryLockscreen) {
+            if (mIncomingRotarySelectorCallWidget.getVisibility() != View.VISIBLE
+                || mIncomingRotarySelectorCallWidget.getAnimation() != null) {
+                // Widget is already hidden or in the process of being hidden
+                return;
+            }
+        } else if (mUseTabsLockscreen){
+            if (mIncomingSlidingTabCallWidget.getVisibility() != View.VISIBLE
+                || mIncomingSlidingTabCallWidget.getAnimation() != null) {
+                return;
+            }
+        }
+        // Hide the incoming call screen with a transition
+        AlphaAnimation anim = new AlphaAnimation(1.0f, 0.0f);
+        anim.setDuration(IN_CALL_WIDGET_TRANSITION_TIME);
+        anim.setAnimationListener(new AnimationListener() {
+
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+
+            public void onAnimationEnd(Animation animation) {
+                // hide the incoming call UI.
+                if (mUseRotaryLockscreen) {
+                    mIncomingRotarySelectorCallWidget.clearAnimation();
+                    mIncomingRotarySelectorCallWidget.setVisibility(View.GONE);
+                } else if (mUseTabsLockscreen){
+                    mIncomingSlidingTabCallWidget.clearAnimation();
+                    mIncomingSlidingTabCallWidget.setVisibility(View.GONE);
+                }
+            }
+        });
+        if (mUseRotaryLockscreen) {
+            mIncomingRotarySelectorCallWidget.startAnimation(anim);
+        } else if (mUseTabsLockscreen){
+            mIncomingSlidingTabCallWidget.startAnimation(anim);
+        }
     }
 
     /**
      * Shows the incoming call widget and cancels any animation that may be fading it out.
      */
     private void showIncomingCallWidget() {
-    	if (!mUseRotaryLockScreen) {
-	        Animation anim = mIncomingCallWidget.getAnimation();
-	        if (anim != null) {
-	            anim.reset();
-	            mIncomingCallWidget.clearAnimation();
-	        }
-	        mIncomingCallWidget.reset(false);
-	        mIncomingCallWidget.setVisibility(View.VISIBLE);
-    	} else {
-    		Animation anim = mIncomingCallWidgetRotary.getAnimation();
-    		if (anim != null) {
-    			anim.reset();
-    			mIncomingCallWidgetRotary.clearAnimation();
-    		}
-    		mIncomingCallWidgetRotary.setVisibility(View.VISIBLE);
-    	}
+        // Look up the various UI elements.
+        // This needs to be called every Incoming Call to recheck settings
+        mLockscreenStyle = (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.LOCKSCREEN_STYLE, 2));
+
+        mUseRotaryLockscreen = (mLockscreenStyle == 2);
+        mUseTabsLockscreen = (mLockscreenStyle == 1);
+        mIncomingRotarySelectorCallWidget.setVisibility((mUseRotaryLockscreen) ? View.VISIBLE : View.GONE);
+        mIncomingSlidingTabCallWidget.setVisibility((mUseTabsLockscreen) ? View.VISIBLE : View.GONE);
+
+
+// tolemaC & Superatmel begin
+        // Hide the incoming call screen with a transition
+        AlphaAnimation animAlpha = new AlphaAnimation(0.0f, 1.0f);
+        animAlpha.setDuration(IN_CALL_WIDGET_TRANSITION_TIME);
+        animAlpha.setAnimationListener(new AnimationListener() {
+
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+
+            public void onAnimationEnd(Animation animation) {
+                // hide the incoming call UI.
+                if (mUseRotaryLockscreen) {
+                    mIncomingRotarySelectorCallWidget.clearAnimation();
+                    mIncomingRotarySelectorCallWidget.setVisibility(View.VISIBLE);
+                } else if (mUseTabsLockscreen){
+                    mIncomingSlidingTabCallWidget.clearAnimation();
+                    mIncomingSlidingTabCallWidget.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        if (mUseRotaryLockscreen) {
+            mIncomingRotarySelectorCallWidget.startAnimation(animAlpha);
+        } else if (mUseTabsLockscreen){
+            mIncomingSlidingTabCallWidget.startAnimation(animAlpha);
+        }
+// tolemaC & Superatmel end
+
+            Animation anim = mIncomingRotarySelectorCallWidget.getAnimation();
+            if (anim != null) {
+                anim.reset();
+                if (mUseRotaryLockscreen) {
+                    mIncomingRotarySelectorCallWidget.clearAnimation();
+                } else if (mUseTabsLockscreen){
+                    mIncomingSlidingTabCallWidget.clearAnimation();
+                }
+            }
+            if (mUseRotaryLockscreen) {
+                //Rotary Widget has no public reset function
+                //mIncomingRotarySelectorCallWidget.reset();
+                mIncomingRotarySelectorCallWidget.setVisibility(View.VISIBLE);
+            } else if (mUseTabsLockscreen){
+                mIncomingSlidingTabCallWidget.reset(false);
+                mIncomingSlidingTabCallWidget.setVisibility(View.VISIBLE);
+            }
     }
 
     /**
-     * Handles state changes of the SlidingTabSelector widget.  While the user
+     * Handles state changes of the Selector widget.  While the user
      * is dragging one of the handles, we display an onscreen hint; see
      * CallCard.getRotateWidgetHint().
      */
     public void onGrabbedStateChange(View v, int grabbedState) {
-    	if (!mUseRotaryLockScreen) {
-	        if (mInCallScreen != null) {
-	            // Look up the hint based on which handle is currently grabbed.
-	            // (Note we don't simply pass grabbedState thru to the InCallScreen,
-	            // since *this* class is the only place that knows that the left
-	            // handle means "Answer" and the right handle means "Decline".)
-	            int hintTextResId, hintColorResId;
-	            switch (grabbedState) {
-	                case SlidingTab.OnTriggerListener.NO_HANDLE:
-	                    hintTextResId = 0;
-	                    hintColorResId = 0;
-	                    break;
-	                case SlidingTab.OnTriggerListener.LEFT_HANDLE:
-	                    // TODO: Use different variants of "Slide to answer" in some cases
-	                    // depending on the phone state, like slide_to_answer_and_hold
-	                    // for a call waiting call, or slide_to_answer_and_end_active or
-	                    // slide_to_answer_and_end_onhold for the 2-lines-in-use case.
-	                    // (Note these are GSM-only cases, though.)
-	                    hintTextResId = R.string.slide_to_answer;
-	                    hintColorResId = R.color.incall_textConnected;  // green
-	                    break;
-	                case SlidingTab.OnTriggerListener.RIGHT_HANDLE:
-	                    hintTextResId = R.string.slide_to_decline;
-	                    hintColorResId = R.color.incall_textEnded;  // red
-	                    break;
-	                default:
-	                    Log.e(LOG_TAG, "onGrabbedStateChange: unexpected grabbedState: "
-	                          + grabbedState);
-	                    hintTextResId = 0;
-	                    hintColorResId = 0;
-	                    break;
-	            }
-	
-	            // Tell the InCallScreen to update the CallCard and force the
-	            // screen to redraw.
-	            mInCallScreen.updateSlidingTabHint(hintTextResId, hintColorResId);
-	        }
-    	} 
-	       
+        if (mInCallScreen != null) {
+            // Look up the hint based on which handle is currently grabbed.
+            // (Note we don't simply pass grabbedState thru to the InCallScreen,
+            // since *this* class is the only place that knows that the left
+            // handle means "Answer" and the right handle means "Decline".)
+            int hintTextResId, hintColorResId;
+            if (mUseRotaryLockscreen) {
+                switch (grabbedState) {
+                    case RotarySelector.NOTHING_GRABBED:
+                        hintTextResId = 0;
+                        hintColorResId = 0;
+                        break;
+                    case RotarySelector.RIGHT_HANDLE_GRABBED:
+                        hintColorResId = R.color.incall_textEnded;  // red
+                        break;
+                    case RotarySelector.LEFT_HANDLE_GRABBED:
+                        // TODO: Use different variants of "Rotate to answer" in some cases
+                        // depending on the phone state, like rotate_to_answer_and_hold
+                        // for a call waiting call, or rotate_to_answer_and_end_active or
+                        // rotate_to_answer_and_end_onhold for the 2-lines-in-use case.
+                        // (Note these are GSM-only cases, though.)
+                        hintColorResId = R.color.incall_textConnected;  // green
+                        break;
+                    default:
+                        Log.e(LOG_TAG, "onGrabbedStateChange: unexpected grabbedState: "
+                              + grabbedState);
+                        hintTextResId = 0;
+                        hintColorResId = 0;
+                        break;
+                }
+            } else if (mUseTabsLockscreen){
+                switch (grabbedState) {
+                    case SlidingTab.OnTriggerListener.NO_HANDLE:
+                        hintTextResId = 0;
+                        hintColorResId = 0;
+                        break;
+                    case SlidingTab.OnTriggerListener.LEFT_HANDLE:
+                        // TODO: Use different variants of "Slide to answer" in some cases
+                        // depending on the phone state, like slide_to_answer_and_hold
+                        // for a call waiting call, or slide_to_answer_and_end_active or
+                        // slide_to_answer_and_end_onhold for the 2-lines-in-use case.
+                        // (Note these are GSM-only cases, though.)
+                        hintTextResId = R.string.slide_to_answer;
+                        hintColorResId = R.color.incall_textConnected;  // green
+                        break;
+                    case SlidingTab.OnTriggerListener.RIGHT_HANDLE:
+                        hintTextResId = R.string.slide_to_decline;
+                        hintColorResId = R.color.incall_textEnded;  // red
+                        break;
+                    default:
+                        Log.e(LOG_TAG, "onGrabbedStateChange: unexpected grabbedState: "
+                              + grabbedState);
+                        hintTextResId = 0;
+                        hintColorResId = 0;
+                        break;
+                }
+            }
+        }
     }
 
 
