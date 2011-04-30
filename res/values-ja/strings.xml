@@ -38,7 +38,7 @@
     <string name="callFailed_server_error" msgid="5717915213586193217">"サーバーエラー: しばらくしてからもう一度お試しください。"</string>
     <string name="callFailed_noSignal" msgid="1889803273616031933">"圏外"</string>
     <string name="callFailed_limitExceeded" msgid="4958065157970101491">"ACMの制限を超えています"</string>
-    <string name="callFailed_powerOff" msgid="2766035859391549713">"無線通信をオフ"</string>
+    <string name="callFailed_powerOff" msgid="2766035859391549713">"無線通信をOFF"</string>
     <string name="callFailed_simError" msgid="5652345589458834655">"エラーまたはSIMなし"</string>
     <string name="callFailed_outOfService" msgid="4825791466557236225">"圏外"</string>
     <string name="callFailed_fdn_only" msgid="2850204579765430641">"発信番号制限により発信が制限されています。"</string>
@@ -115,7 +115,7 @@
     <string name="settings_label" msgid="3876743539816984008">"ネットワーク設定"</string>
     <string name="voicemail" msgid="8693759337917898954">"ボイスメール"</string>
     <string name="voicemail_abbreviated" msgid="2215592488517217448">"VM:"</string>
-    <string name="networks" msgid="8873030692174541976">"ネットワークオペレーター"</string>
+    <string name="networks" msgid="8873030692174541976">"通信事業者"</string>
     <string name="call_settings" msgid="6112441768261754562">"通話設定"</string>
     <string name="additional_gsm_call_settings" msgid="1391795981938800617">"その他の設定"</string>
     <string name="sum_gsm_call_settings" msgid="4076647190996778012">"その他のGSM専用通話設定"</string>
@@ -125,7 +125,7 @@
     <string name="labelCallerId" msgid="3888899447379069198">"発信者番号"</string>
     <string name="sum_hide_caller_id" msgid="1071407020290873782">"発信時に番号を通知しない"</string>
     <string name="sum_show_caller_id" msgid="6768534125447290401">"発信時に番号を通知する"</string>
-    <string name="sum_default_caller_id" msgid="1954518825510901365">"発信者番号表示にオペレータの既定値を使用"</string>
+    <string name="sum_default_caller_id" msgid="1954518825510901365">"発信者番号表示に通信事業者のデフォルト値を使用する"</string>
     <string name="labelCW" msgid="6120513814915920200">"通話中着信"</string>
     <string name="sum_cw_enabled" msgid="8083061901633671397">"通話中も着信を知らせる"</string>
     <string name="sum_cw_disabled" msgid="3648693907300104575">"通話中も着信を知らせる"</string>
@@ -134,22 +134,22 @@
     <string name="labelCFU" msgid="8147177368148660600">"常に転送"</string>
     <string name="messageCFU" msgid="3560082430662923687">"常にこの番号を使用"</string>
     <string name="sum_cfu_enabled_indicator" msgid="4014187342724130197">"電話をすべて転送する"</string>
-    <string name="sum_cfu_enabled" msgid="956178654350554451">"電話をすべて{0}に転送する"</string>
+    <string name="sum_cfu_enabled" msgid="2450052502198827927">"電話をすべて<xliff:g id="PHONENUMBER">{0}</xliff:g>￼に転送する"</string>
     <string name="sum_cfu_enabled_no_number" msgid="6591985777096823616">"番号が利用できません"</string>
     <string name="sum_cfu_disabled" msgid="3698472522160364904">"無効"</string>
     <string name="labelCFB" msgid="218938523102207587">"通話中の着信時に転送"</string>
     <string name="messageCFB" msgid="3711089705936187129">"通話中着信の転送番号"</string>
-    <string name="sum_cfb_enabled" msgid="2501948432392255856">"{0}に転送する"</string>
+    <string name="sum_cfb_enabled" msgid="5984198104833116690">"<xliff:g id="PHONENUMBER">{0}</xliff:g>に転送する"</string>
     <string name="sum_cfb_disabled" msgid="227440009979537651">"無効"</string>
     <string name="disable_cfb_forbidden" msgid="4524424437001441832">"ご利用の携帯通信会社では通話中の着信時の転送を無効にすることができません。"</string>
     <string name="labelCFNRy" msgid="3646316323834351390">"不在着信時に転送"</string>
     <string name="messageCFNRy" msgid="672317899884380374">"不在着信時の転送番号"</string>
-    <string name="sum_cfnry_enabled" msgid="3473526018876802076">"{0}に転送する"</string>
+    <string name="sum_cfnry_enabled" msgid="6955775691317662910">"<xliff:g id="PHONENUMBER">{0}</xliff:g>に転送する"</string>
     <string name="sum_cfnry_disabled" msgid="8422350929957344729">"無効"</string>
     <string name="disable_cfnry_forbidden" msgid="7041605706777677935">"ご利用の携帯通信会社では不在着信時の転送を無効にすることができません。"</string>
     <string name="labelCFNRc" msgid="47183615370850000">"着信不能時に転送"</string>
     <string name="messageCFNRc" msgid="6380695421020295119">"着信不能時の転送番号"</string>
-    <string name="sum_cfnrc_enabled" msgid="3528648673654636587">"{0}に転送する"</string>
+    <string name="sum_cfnrc_enabled" msgid="7010898346095497421">"<xliff:g id="PHONENUMBER">{0}</xliff:g>に転送する"</string>
     <string name="sum_cfnrc_disabled" msgid="7222141261321276464">"無効"</string>
     <string name="disable_cfnrc_forbidden" msgid="1093527570652781997">"ご利用の携帯通信会社では着信不能時の転送を無効にすることができません。"</string>
     <string name="updating_title" msgid="6146755386174019046">"通話設定"</string>
@@ -160,16 +160,16 @@
     <string name="response_error" msgid="6674110501330139405">"ネットワークから予期しない応答が返されました。"</string>
     <string name="exception_error" msgid="7027667130619518211">"ネットワークまたはSIMカードのエラーです。"</string>
     <string name="fdn_only_error" msgid="7079583506377602000">"発信番号制限で指定された番号に対してのみ操作できます。"</string>
-    <string name="radio_off_error" msgid="6717116288405111269">"無線通信をオンにしてから設定を表示してください。"</string>
+    <string name="radio_off_error" msgid="6717116288405111269">"無線通信をONにしてから設定を表示してください。"</string>
     <string name="close_dialog" msgid="2365884406356986917">"OK"</string>
     <string name="enable" msgid="1059008390636773574">"有効にする"</string>
     <string name="disable" msgid="7274240979164762320">"無効にする"</string>
     <string name="change_num" msgid="239476305819844391">"更新"</string>
-  <string-array name="clir_display_values">
-    <item msgid="5560134294467334594">"ネットワーク既定"</item>
-    <item msgid="7876195870037833661">"番号を非通知"</item>
-    <item msgid="1108394741608734023">"番号を通知"</item>
-  </string-array>
+    <string-array name="clir_display_values">
+        <item msgid="5560134294467334594">"ネットワーク既定"</item>
+        <item msgid="7876195870037833661">"番号を非通知"</item>
+        <item msgid="1108394741608734023">"番号を通知"</item>
+    </string-array>
     <string name="vm_save_number" msgid="4579969432544566719">"ボイスメールの番号の保存"</string>
     <string name="vm_changed" msgid="380744030726254139">"ボイスメールの番号が変更されました。"</string>
     <string name="vm_change_failed" msgid="6912718596496220653">"ボイスメールの番号を変更できませんでした。"\n"問題が解決しない場合は携帯通信会社に問い合わせてください。"</string>
@@ -184,11 +184,12 @@
     <string name="empty_networks_list" msgid="4249426905018815316">"ネットワークが見つかりません。"</string>
     <string name="search_networks" msgid="1601136049300882441">"ネットワークを検索"</string>
     <string name="network_query_error" msgid="6828516148953325006">"ネットワークの検索中にエラーが発生しました。"</string>
-    <string name="register_on_network" msgid="9055203954040805084">"<xliff:g id="NETWORK">%s</xliff:g>に登録中..."</string>
+    <string name="register_on_network" msgid="9055203954040805084">"<xliff:g id="NETWORK">%s</xliff:g>に登録中..."
+    </string>
     <string name="not_allowed" msgid="3540496123717833833">"このSIMカードではこのネットワークに接続できません。"</string>
     <string name="connect_later" msgid="500090982903469816">"現在このネットワークに接続できません。後ほどもう一度お試しください。"</string>
     <string name="registration_done" msgid="495135664535876612">"ネットワークに登録されました。"</string>
-    <string name="sum_carrier_select" msgid="6526225502314751575">"ネットワークオペレーターの選択"</string>
+    <string name="sum_carrier_select" msgid="6526225502314751575">"通信事業者を選択する"</string>
     <string name="sum_search_networks" msgid="2921092249873272715">"利用可能なすべてのネットワークを検索する"</string>
     <string name="select_automatically" msgid="8615980695510888796">"自動選択"</string>
     <string name="sum_select_automatically" msgid="8460954604521755275">"最適なネットワークを自動的に選択する"</string>
@@ -221,8 +222,11 @@
     <string name="roaming" msgid="8871412572928323707">"データローミング"</string>
     <string name="roaming_enable" msgid="7331106985174381987">"ローミング時にデータサービスに接続する"</string>
     <string name="roaming_disable" msgid="1843417228755568110">"ローミング時にデータサービスに接続する"</string>
-    <string name="roaming_reenable_message" msgid="6973894869473170666">"データローミングをオフにしてホームネットワークを離れたため、データ接続が切断されました。"</string>
+    <string name="roaming_reenable_message" msgid="6973894869473170666">"データローミングをOFFにしてホームネットワークを離れたため、データ接続が切断されました。"</string>
     <string name="roaming_warning" msgid="7820963598559553967">"データローミングを許可すると、ローミング料金が発生する場合があります。"</string>
+    <string name="mvno_roaming">国内データローミング</string>
+    <string name="mvno_roaming_summary">国内で異なるネットワークプロバイダを利用可能にします。</string>
+    <string name="mvno_roaming_warning">あなたのサービスプロバイダについて同一国内でデータローミングを可能にしますか？いくつかの仮想ネットワークプロバイダはデータアクセスのためにこの設定を必要とします。あなたのプロバイダが国内ローミングに課金を請求する場合、このオプションは有効にしないでください。このオプションは有効にした後、再起動するか機内モードをトグルするまで機能が働きません。</string>
     <string name="gsm_umts_options" msgid="6538311689850981686">"GSM/UMTSオプション"</string>
     <string name="cdma_options" msgid="4016822858172249884">"CDMAオプション"</string>
     <string name="throttle_data_usage" msgid="3715677828160555808">"データ使用"</string>
@@ -270,24 +274,24 @@
     <string name="international_disable" msgid="2850648591041088931">"国際ニュースは無効になっています"</string>
     <string name="list_language_title" msgid="2841683501919760043">"言語"</string>
     <string name="list_language_summary" msgid="8109546531071241601">"ニュースの言語の選択"</string>
-  <string-array name="list_language_entries">
-    <item msgid="6137851079727305485">"英語"</item>
-    <item msgid="1151988412809572526">"フランス語"</item>
-    <item msgid="577840534704312665">"スペイン語"</item>
-    <item msgid="8385712091143148180">"日本語"</item>
-    <item msgid="1858401628368130638">"韓国語"</item>
-    <item msgid="1933212028684529632">"中国語"</item>
-    <item msgid="1908428006803639064">"ヘブライ語"</item>
-  </string-array>
-  <string-array name="list_language_values">
-    <item msgid="1804908636436467150">"1"</item>
-    <item msgid="289708030346890334">"2"</item>
-    <item msgid="1121469729692402684">"3"</item>
-    <item msgid="2614093115912897722">"4"</item>
-    <item msgid="2411164639857960614">"5"</item>
-    <item msgid="5884448729274543324">"6"</item>
-    <item msgid="5511864807618312598">"7"</item>
-  </string-array>
+    <string-array name="list_language_entries">
+        <item msgid="6137851079727305485">"英語"</item>
+        <item msgid="1151988412809572526">"フランス語"</item>
+        <item msgid="577840534704312665">"スペイン語"</item>
+        <item msgid="8385712091143148180">"日本語"</item>
+        <item msgid="1858401628368130638">"韓国語"</item>
+        <item msgid="1933212028684529632">"中国語"</item>
+        <item msgid="1908428006803639064">"ヘブライ語"</item>
+    </string-array>
+    <string-array name="list_language_values">
+        <item msgid="1804908636436467150">"1"</item>
+        <item msgid="289708030346890334">"2"</item>
+        <item msgid="1121469729692402684">"3"</item>
+        <item msgid="2614093115912897722">"4"</item>
+        <item msgid="2411164639857960614">"5"</item>
+        <item msgid="5884448729274543324">"6"</item>
+        <item msgid="5511864807618312598">"7"</item>
+    </string-array>
     <string name="list_language_dtitle" msgid="5442908726538951934">"言語"</string>
     <string name="enable_disable_local_weather" msgid="986967454867219114">"各地の天気"</string>
     <string name="local_weather_enable" msgid="6199315114382448922">"各地の天気は有効になっています"</string>
@@ -459,7 +463,8 @@
     <string name="fdn_enable_puk2_requested" msgid="2608836967081385948">"パスワードが正しくありません。PIN2を変更して再入力してください。"</string>
     <string name="puk2_requested" msgid="5863580927788820813">"パスワードが正しくありません。SIMがロックされています。PUK2を入力してください。"</string>
     <string name="doneButton" msgid="2859593360997984240">"完了"</string>
-    <string name="caller_manage_header" msgid="3231519674734638786">"グループ通話 <xliff:g id="CONF_CALL_TIME">%s</xliff:g>"</string>
+    <string name="caller_manage_header" msgid="3231519674734638786">"グループ通話 <xliff:g id="CONF_CALL_TIME">%s</xliff:g>"
+    </string>
     <string name="caller_manage_manage_done_text" msgid="8093934725536733856">"通話に戻る"</string>
     <string name="sim_missing_continueView_text" msgid="4199689081742026077">"SIMカードなしで続ける"</string>
     <string name="sim_missing_msg_text" msgid="6803619600564142188">"SIMカードが見つかりません。SIMカードを携帯電話に挿入してください。"</string>
@@ -477,6 +482,7 @@
     <string name="card_title_on_hold" msgid="821463117892339942">"保留中"</string>
     <string name="card_title_hanging_up" msgid="3999101620995182450">"通話終了"</string>
     <string name="card_title_in_call" msgid="6346543933068225205">"着信"</string>
+    <string name="card_title_my_phone_number" msgid="112428362494434191">"この電話の番号: <xliff:g id="MY_PHONE_NUMBER">%s</xliff:g>"</string>
     <string name="notification_missedCallTitle" msgid="7554385905572364535">"不在着信"</string>
     <string name="notification_missedCallsTitle" msgid="1361677948941502522">"不在着信"</string>
     <string name="notification_missedCallsMsg" msgid="4575787816055205600">"不在着信<xliff:g id="NUM_MISSED_CALLS">%s</xliff:g>件"</string>
@@ -506,9 +512,10 @@
     <string name="incall_error_supp_service_hangup" msgid="7417583238334762737">"通話を解放できません。"</string>
     <string name="incall_call_type_label_sip" msgid="2310958283037924371">"インターネット通話"</string>
     <string name="emergency_enable_radio_dialog_title" msgid="4627849966634578257">"緊急通報"</string>
-    <string name="emergency_enable_radio_dialog_message" msgid="207613549344420291">"無線通信をオンにしています..."</string>
+    <string name="emergency_enable_radio_dialog_message" msgid="207613549344420291">"無線通信をONにしています..."</string>
     <string name="emergency_enable_radio_dialog_retry" msgid="3724423402363063736">"圏外 - 再試行中..."</string>
-    <string name="dial_emergency_error" msgid="8362624131726575194">"<xliff:g id="NON_EMERGENCY_NUMBER">%s</xliff:g>は緊急通報番号ではないので発信できません。"</string>
+    <string name="dial_emergency_error" msgid="8362624131726575194">"<xliff:g id="NON_EMERGENCY_NUMBER">%s</xliff:g>は緊急通報番号ではないので発信できません。"
+    </string>
     <string name="dial_emergency_empty_error" msgid="5048645338094088229">"発信できません。緊急通報番号におかけください。"</string>
     <string name="dialerKeyboardHintText" msgid="9192914825413747792">"キーボードで番号を入力してください"</string>
     <string name="dtmfDialpadHintText" msgid="2153335217920679451">"タッチトーンキー"</string>
@@ -535,19 +542,19 @@
     <string name="importToFDNfromContacts" msgid="2130620207013368580">"連絡先からインポート"</string>
     <string name="hac_mode_title" msgid="8740268574688743289">"補聴機能"</string>
     <string name="hac_mode_summary" msgid="6833851160514929341">"補聴機能の互換をON"</string>
-  <string-array name="tty_mode_entries">
-    <item msgid="512950011423868021">"TTY OFF"</item>
-    <item msgid="3971695875449640648">"TTYフル"</item>
-    <item msgid="1937509904407445684">"TTY HCO"</item>
-    <item msgid="5644925873488772224">"TTY VCO"</item>
-  </string-array>
+    <string-array name="tty_mode_entries">
+        <item msgid="512950011423868021">"TTY OFF"</item>
+        <item msgid="3971695875449640648">"TTYフル"</item>
+        <item msgid="1937509904407445684">"TTY HCO"</item>
+        <item msgid="5644925873488772224">"TTY VCO"</item>
+    </string-array>
     <string name="eri_text_label" msgid="4326942349915331461">"ERIテキスト"</string>
     <string name="dtmf_tones_title" msgid="3866923093113274152">"DTMFトーン"</string>
     <string name="dtmf_tones_summary" msgid="3351820372864020331">"DTMFトーンの長さを設定します"</string>
-  <string-array name="dtmf_tone_entries">
-    <item msgid="899650777817315681">"標準"</item>
-    <item msgid="2883365539347850535">"長め"</item>
-  </string-array>
+    <string-array name="dtmf_tone_entries">
+        <item msgid="899650777817315681">"標準"</item>
+        <item msgid="2883365539347850535">"長め"</item>
+    </string-array>
     <string name="network_message" msgid="5673682885938122239">"ネットワークメッセージ"</string>
     <string name="ota_title_activate" msgid="8616918561356194398">"携帯電話を有効にする"</string>
     <string name="ota_touch_activate" msgid="6553212803262586244">"通話サービスを有効にするには特別な通話が必要です。"\n\n"[有効にする]を押してから、流れてくる音声に従って電話を有効にしてください。"</string>
@@ -575,30 +582,38 @@
     <string name="phone_entered_ecm_text" msgid="6266424252578731203">"緊急通報待機モードになりました"</string>
     <string name="phone_in_ecm_notification_title" msgid="3226896828951687085">"緊急通報待機モード"</string>
     <string name="phone_in_ecm_call_notification_text" msgid="4611608947314729773">"データ接続が無効です"</string>
-  <plurals name="phone_in_ecm_notification_time">
-    <item quantity="one" msgid="4866221796252472622">"<xliff:g id="COUNT">%s</xliff:g>分間データ接続できません"</item>
-    <item quantity="other" msgid="3122217344579273583">"<xliff:g id="COUNT">%s</xliff:g>分間データ接続できません"</item>
-  </plurals>
-  <plurals name="alert_dialog_exit_ecm">
-    <item quantity="one" msgid="2181569650640386253">"<xliff:g id="COUNT">%s</xliff:g>分間緊急通報待機モードになります。このモード中はデータ接続が必要なアプリケーションは利用できません。今すぐ終了しますか？"</item>
-    <item quantity="other" msgid="3231879566243957821">"<xliff:g id="COUNT">%s</xliff:g>分間緊急通報待機モードになります。このモード中はデータ接続が必要なアプリケーションは利用できません。今すぐ終了しますか？"</item>
-  </plurals>
-  <plurals name="alert_dialog_not_avaialble_in_ecm">
-    <item quantity="one" msgid="8939225905428421722">"緊急通報待機モード中のため選択した操作は利用できません。このモードはあと<xliff:g id="COUNT">%s</xliff:g>分間続行します。今すぐ終了しますか？"</item>
-    <item quantity="other" msgid="3489076611710869904">"緊急通報待機中なので、選択した操作は利用できません。あと<xliff:g id="COUNT">%s</xliff:g>分間このモードです。今すぐ終了しますか？"</item>
-  </plurals>
+    <plurals name="phone_in_ecm_notification_time">
+        <item quantity="one" msgid="4866221796252472622">"<xliff:g id="COUNT">%s</xliff:g>分間データ接続できません"
+        </item>
+        <item quantity="other" msgid="3122217344579273583">"<xliff:g id="COUNT">%s</xliff:g>分間データ接続できません"
+        </item>
+    </plurals>
+    <plurals name="alert_dialog_exit_ecm">
+        <item quantity="one" msgid="2181569650640386253">"<xliff:g id="COUNT">%s</xliff:g>分間緊急通報待機モードになります。このモード中はデータ接続が必要なアプリケーションは利用できません。今すぐ終了しますか？"
+        </item>
+        <item quantity="other" msgid="3231879566243957821">"<xliff:g id="COUNT">%s</xliff:g>分間緊急通報待機モードになります。このモード中はデータ接続が必要なアプリケーションは利用できません。今すぐ終了しますか？"
+        </item>
+    </plurals>
+    <plurals name="alert_dialog_not_avaialble_in_ecm">
+        <item quantity="one" msgid="8939225905428421722">"緊急通報待機モード中のため選択した操作は利用できません。このモードはあと<xliff:g id="COUNT">%s</xliff:g>分間続行します。今すぐ終了しますか？"
+        </item>
+        <item quantity="other" msgid="3489076611710869904">"緊急通報待機中なので、選択した操作は利用できません。あと<xliff:g id="COUNT">%s</xliff:g>分間このモードです。今すぐ終了しますか？"
+        </item>
+    </plurals>
     <string name="alert_dialog_in_ecm_call" msgid="2334477874583086142">"選択した操作は緊急通報待機時には実行できません"</string>
     <string name="progress_dialog_exiting_ecm" msgid="8751952246695857820">"緊急通報待機モードを終了中"</string>
     <string name="alert_dialog_yes" msgid="6674268047820703974">"はい"</string>
     <string name="alert_dialog_no" msgid="1476091437797628703">"いいえ"</string>
     <string name="alert_dialog_dismiss" msgid="2491494287075907171">"解除"</string>
     <string name="voicemail_settings" msgid="2288633492587133022">"ボイスメールの設定"</string>
-    <string name="voicemail_number_not_set" msgid="1604580506447265808">"&lt;未設定&gt;"</string>
+    <string name="voicemail_number_not_set" msgid="1604580506447265808">"&lt;未設定>"</string>
     <string name="voicemail_provider" msgid="6299679757491942924">"ボイスメールサービス"</string>
-    <string name="voicemail_settings_for" msgid="9018656268027893088">"<xliff:g id="PROVIDER_NAME">%s</xliff:g>の設定"</string>
+    <string name="voicemail_settings_for" msgid="9018656268027893088">"<xliff:g id="PROVIDER_NAME">%s</xliff:g>の設定"
+    </string>
     <string name="other_settings" msgid="3672912580359716394">"その他の通話設定"</string>
     <string name="dial_button_label" msgid="5551611636419190229">"発信"</string>
-    <string name="calling_via_template" msgid="7374498518104190489">"^1で発信中:"\n<b>"^2"</b></string>
+    <string name="calling_via_template" msgid="7374498518104190489">"^1で発信中:"\n<b>"^2"</b>
+    </string>
     <string name="slide_to_answer" msgid="255903188611244476">"右にドラッグして応答"</string>
     <string name="slide_to_silence" msgid="2224982696981131553">"左にドラッグして着信音を消音"</string>
     <string name="slide_to_decline" msgid="7342094219435077069">"左にドラッグして応答を拒否"</string>
@@ -614,7 +629,7 @@
     <string name="sip_accounts" msgid="2097054001288457163">"インターネット通話（SIP）アカウント"</string>
     <string name="sip_accounts_title" msgid="1212889069281054570">"アカウント"</string>
     <string name="sip_accounts_summary" msgid="6812629993146552527">"インターネット通話（SIP）のアカウントと状態を管理"</string>
-    <string name="sip_receive_calls" msgid="5635685570889971559">"着信を受ける"</string>
+    <string name="sip_receive_calls" msgid="5635685570889971559">"着信を許可"</string>
     <string name="sip_receive_calls_summary" msgid="8403613238633679184">"電池使用量が増えます"</string>
     <string name="sip_call_options" msgid="7128315120104066133">"通話オプションの設定"</string>
     <string name="sip_call_options_title" msgid="27433718808839672">"インターネット通話を使用"</string>
@@ -646,9 +661,9 @@
     <string name="close_profile" msgid="6886968271423155284">"閉じる"</string>
     <string name="primary_account" msgid="2229538308291934245">"メイン"</string>
     <string name="primary_account_title" msgid="5694267218020951531">"これをメインのアカウントにする"</string>
-    <string name="primary_account_summary" msgid="7339564526372623187">"発信に使用"</string>
+    <string name="primary_account_summary" msgid="7339564526372623187">"発信に使用する"</string>
     <string name="advanced_settings_title" msgid="8846648727128452293">"詳細設定"</string>
-    <string name="primary_account_summary_with" msgid="1633960536212343187">"メインアカウントです。<xliff:g id="REGISTRATION_STATUS">%s</xliff:g>"</string>
+    <string name="primary_account_summary_with" msgid="1633960536212343187">"メインアカウント（<xliff:g id="REGISTRATION_STATUS">%s</xliff:g>）"</string>
     <string name="registration_status_checking_status" msgid="3381868307694056727">"ステータスを確認中..."</string>
     <string name="registration_status_registering" msgid="7115694971025999516">"登録中..."</string>
     <string name="registration_status_still_trying" msgid="1471733478935862864">"試行中です..."</string>
@@ -674,9 +689,11 @@
     <string name="send_keepalive_summary" msgid="9038969409950960640">"SIPキープアライブメッセージを送信します"</string>
     <string name="auto_registration_title" msgid="3586777375420122154">"自動登録"</string>
     <string name="auto_registration_summary" msgid="2522794041206619280">"プロフィールを自動的に登録します"</string>
-    <string name="set_primary_title" msgid="5351892327447571451">"メインアカウントにする"</string>
-    <string name="set_primary_summary" msgid="2219064654523258577">"発信に使用"</string>
+    <string name="set_primary_title" msgid="5351892327447571451">"メインアカウントに設定"</string>
+    <string name="set_primary_summary" msgid="2219064654523258577">"発信に使用する"</string>
     <string name="advanced_settings" msgid="8350631795335495338">"オプション設定"</string>
+    <string name="auth_username_title" msgid="851473016307947120">"認証ユーザー名"</string>
+    <string name="auth_username_summary" msgid="6782012405225938629">"認証に使用するユーザー名"</string>
     <string name="default_preference_summary" msgid="868766740121667450">"&lt;未設定&gt;"</string>
     <string name="display_name_summary" msgid="8636377460518225523">"&lt;ユーザー名と同じ&gt;"</string>
     <string name="optional_summary" msgid="1464058793789832411">"&lt;オプション&gt;"</string>
@@ -689,4 +706,72 @@
     <string name="no_internet_available" msgid="1100564991026313234">"インターネット通話を行うにはインターネットへの接続を確認してください。"</string>
     <string name="no_wifi_available" msgid="3389743006886634541">"インターネット通話を行うにはWi-Fiネットワークへの接続が必要です（[ワイヤレスとネットワークの設定]を使用）。"</string>
     <string name="no_voip" msgid="8901474054537199865">"インターネット通話には対応していません"</string>
+
+    <!--  added by takuo for CM -->
+    <string name="notification_ongoing_calling_format">発信中 (<xliff:g id="duration">%s</xliff:g>)
+    </string>
+    <string name="advanced_setting">追加設定 V.30.1</string>
+    <string name="vibrate_outgoing">応答時に振動</string>
+    <string name="vibrate_outgoing_sum">相手が呼び出しに応答した時にバイブレーションする</string>
+    <string name="vibrate_45">45秒間隔で振動</string>
+    <string name="vibrate_45_sum">こちらから発信した通話では45秒間隔でバイブレーションする</string>
+    <string name="vibrate_hangup">切断時に振動</string>
+    <string name="vibrate_hangup_sum">通話を終了した時にバイブレーションする</string>
+    <string name="screen_awake">スクリーン維持</string>
+    <string name="screen_awake_sum">着信中は通常時より長くスクリーンオンを維持する</string>
+    <string name="always_proximity">常に近接センサを有効にする</string>
+    <string name="always_proximity_sum">端末が水平であっても近接センサによりスクリーンをロックさせる</string>
+    <string name="led_notify_call">不在着信をLEDで通知</string>
+    <string name="led_notify_call_sum">不在着信がある場合にLEDを点滅して通知する</string>
+    <string name="led_show_organ">会社名表示</string>
+    <string name="led_show_organ_sum">着信画面で会社名を表示する</string>
+    <string name="vibrate_call_waiting">呼出中に振動</string>
+    <string name="vibrate_call_waiting_sum">呼び出し中にバイブレーションする</string>
+    <string name="return_home">履歴に戻る</string>
+    <string name="return_home_sum">通話終了時に通話履歴画面に戻る</string>
+    <string name="menu_addBlackList">着信拒否リストに追加</string>
+    <string name="black_list">着信拒否リスト</string>
+    <string name="black_list_sum">リストにある連絡先からの着信を拒否する</string>
+    <string name="add_black">電話番号を追加</string>
+    <string name="remove_black">%s をリストから削除</string>
+    <string name="turn_silence">ひっくり返して消音</string>
+    <string name="turn_silence_sum">携帯電話をひっくり返して着信音を消す</string>
+    <string name="left_hand">左手で使用する</string>
+    <string name="left_hand_sum">左手で携帯電話を持って使用する (再起動が必要)</string>
+    <string name="set_force_touch">タッチパネル</string>
+    <string name="set_force_touch_sum">近接センサの反応によらずタッチUIを表示する</string>
+
+    <string name="per_change_mobile_network">ネットワークを変更(2G/3G)</string>
+    <string name="per_change_mobile_network_desc">この権限を許可されたアプリケーションは、いつでも2G/3Gデータの切り替えが可能です。3Gは高速ですが、バッテリ消費が増加します。また、キャリアの課金も増加することがあります。</string>
+    <string name="phone_number_label">自分の電話番号</string>
+    <string name="phone_number_summary">この携帯電話の電話番号をセットする</string>
+    <!-- CM extra -->
+    <string name="voicemail_notification_title">ボイスメールの通知</string>
+    <string name="voicemail_notification_summary">新着ボイスメールの通知を有効にする</string>
+    <string name="trackball_answer">トラックボールで応答</string>
+    <string name="trackball_answer_sum">トラックボールを押して着信に応答する</string>
+    <string-array name="trackballLabels">
+       <item>無効</item>
+       <item>タップで応答</item>
+       <item>ダブルタップで応答</item>
+    </string-array>
+    <string name="trackball_hangup">トラックボールで通話終了</string>
+    <string name="trackball_hangup_sum">トラックボールを押して現在の通話を終了させる</string>
+    <string-array name="trackballHangupLabels">
+       <item>無効</item>
+       <item>タップで終了</item>
+       <item>ダブルタップで終了</item>
+    </string-array>
+    <string name="rotate_to_answer">右に回転で応答</string>
+    <string name="rotate_to_decline">左に回転で拒否</string>
+
+    <!-- Phone Goggles -->
+    <string name="toast_phone_goggles">今の時間に発信することは許可されていません。あとで再度お試しください。</string>
+    <string name="dialog_phone_goggles_title">発信はブロックされました</string>
+    <string name="dialog_phone_goggles_title_unlocked">発信は承認されました</string>
+    <string name="dialog_phone_goggles_content">今の時間に発信するのは賢明ではないかもしれません。本当に続けますか？</string>
+    <string name="dialog_phone_goggles_unauthorized">今の時間に発信するのは賢明ではないかもしれません。</string>
+    <string name="dialog_phone_goggles_ok">発信</string>
+    <string name="dialog_phone_goggles_cancel">キャンセル</string>
+
 </resources>
