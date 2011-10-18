@@ -49,6 +49,17 @@
 	android:layout_marginBottom="60dip"
         />
 
+    <!-- (1) incomingCallWidget: the UI displayed while an incoming call is ringing. -->
+    <com.android.internal.widget.RingSelector
+        android:id="@+id/incomingRingSelectorCallWidget"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:orientation="vertical"
+        />
+
+
+
     <!--
         (2) inCallControls: the widgets visible while a regular call
         (or calls) is in progress

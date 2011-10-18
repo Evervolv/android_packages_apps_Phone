@@ -36,6 +36,7 @@ import android.widget.ToggleButton;
 
 import com.android.internal.telephony.Call;
 import com.android.internal.telephony.Phone;
+import com.android.internal.widget.RingSelector;
 import com.android.internal.widget.SlidingTab;
 import com.android.internal.widget.RotarySelector;
 import com.android.internal.telephony.CallManager;
@@ -48,7 +49,9 @@ import com.android.internal.telephony.CallManager;
  * non-touch-sensitive parts of the in-call UI (i.e. the call card).
  */
 public class InCallTouchUi extends FrameLayout
-        implements View.OnClickListener, SlidingTab.OnTriggerListener, RotarySelector.OnDialTriggerListener {
+        implements View.OnClickListener, SlidingTab.OnTriggerListener, RotarySelector.OnDialTriggerListener,
+        RingSelector.OnRingTriggerListener {
+	
     private static final int IN_CALL_WIDGET_TRANSITION_TIME = 250; // in ms
     private static final String LOG_TAG = "InCallTouchUi";
     private static final boolean DBG = (PhoneApp.DBG_LEVEL >= 2);
@@ -66,6 +69,7 @@ public class InCallTouchUi extends FrameLayout
     // UI containers / elements
     private SlidingTab mIncomingSlidingTabCallWidget;  // UI used for an incoming call
     private RotarySelector mIncomingRotarySelectorCallWidget;  // UI used for an incoming call
+    private RingSelector mIncomingRingSelectorCallWidget;  // UI used for an incoming call
 
     private View mInCallControls;  // UI elements while on a regular call
     //
@@ -106,6 +110,7 @@ public class InCallTouchUi extends FrameLayout
 
     private boolean mUseTabsLockscreen = (mLockscreenStyle == 1);
     private boolean mUseRotaryLockscreen = (mLockscreenStyle == 2);
+    private boolean mUseRingLockscreen = (mLockscreenStyle == 3);
 
     public InCallTouchUi(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -151,6 +156,29 @@ public class InCallTouchUi extends FrameLayout
             mIncomingRotarySelectorCallWidget.setLeftHandleResource(R.drawable.ic_jog_dial_answer);
             mIncomingRotarySelectorCallWidget.setRightHandleResource(R.drawable.ic_jog_dial_decline);
             mIncomingRotarySelectorCallWidget.setOnDialTriggerListener(this);
+            
+            // "Dial-to-answer" widget for incoming calls.
+            mIncomingRingSelectorCallWidget = (RingSelector) findViewById(R.id.incomingRingSelectorCallWidget);
+            mIncomingRingSelectorCallWidget.enableMiddleRing(true);
+            mIncomingRingSelectorCallWidget.setRingAlignment(RingSelector.ALIGN_PHONE);
+            mIncomingRingSelectorCallWidget.setMiddleRingResources(
+            		com.android.internal.R.drawable.jog_tab_target_green,
+            		com.android.internal.R.drawable.jog_ring_big);
+            
+            mIncomingRingSelectorCallWidget.showSecRing(0);
+            mIncomingRingSelectorCallWidget.showSecRing(1);
+            mIncomingRingSelectorCallWidget.hideSecRing(2);
+            mIncomingRingSelectorCallWidget.hideSecRing(3);
+            mIncomingRingSelectorCallWidget.hideSecRing(4);
+            mIncomingRingSelectorCallWidget.hideSecRing(5);
+
+            mIncomingRingSelectorCallWidget.setSecRingResources(0, R.drawable.ic_jog_dial_answer,
+            		com.android.internal.R.drawable.jog_ring_toggle);
+            mIncomingRingSelectorCallWidget.setSecRingResources(1, R.drawable.ic_jog_dial_decline,
+            		com.android.internal.R.drawable.jog_ring_toggle);
+            
+            mIncomingRingSelectorCallWidget.setOnRingTriggerListener(this);
+            
 
         // "slide-to-answer" widget for incoming calls.
             mIncomingSlidingTabCallWidget = (SlidingTab) findViewById(R.id.incomingSlidingTabCallWidget);
@@ -671,6 +699,42 @@ public class InCallTouchUi extends FrameLayout
 
     }
 
+	@Override
+	public void onRingTrigger(View v, int whichRing, int whichSecRing) {
+		// TODO Auto-generated method stub
+		
+    	if (whichSecRing == 0) { // Answer
+            hideIncomingCallWidget();
+
+            // ...and also prevent it from reappearing right away.
+            // (This covers up a slow response from the radio; see updateState().)
+            mLastIncomingCallActionTime = SystemClock.uptimeMillis();
+
+            // Do the appropriate action.
+            if (mInCallScreen != null) {
+                // Send this to the InCallScreen as a virtual "button click" event:
+                mInCallScreen.handleOnscreenButtonClick(R.id.answerButton);
+            } else {
+                Log.e(LOG_TAG, "answer trigger: mInCallScreen is null");
+            }
+    	} else if (whichSecRing == 1){ // Decline
+            hideIncomingCallWidget();
+
+            // ...and also prevent it from reappearing right away.
+            // (This covers up a slow response from the radio; see updateState().)
+            mLastIncomingCallActionTime = SystemClock.uptimeMillis();
+
+            // Do the appropriate action.
+            if (mInCallScreen != null) {
+                // Send this to the InCallScreen as a virtual "button click" event:
+                mInCallScreen.handleOnscreenButtonClick(R.id.rejectButton);
+            } else {
+                Log.e(LOG_TAG, "reject trigger: mInCallScreen is null");
+            }
+    	}
+		
+	}
+	
     /**
      * Apply an animation to hide the incoming call widget.
      */
@@ -684,6 +748,13 @@ public class InCallTouchUi extends FrameLayout
         } else if (mUseTabsLockscreen){
             if (mIncomingSlidingTabCallWidget.getVisibility() != View.VISIBLE
                 || mIncomingSlidingTabCallWidget.getAnimation() != null) {
+            	// Widget is already hidden or in the process of being hidden
+                return;
+            }
+        } else if (mUseRingLockscreen){
+            if (mIncomingRingSelectorCallWidget.getVisibility() != View.VISIBLE
+                || mIncomingRingSelectorCallWidget.getAnimation() != null) {
+                // Widget is already hidden or in the process of being hidden
                 return;
             }
         }
@@ -708,6 +779,9 @@ public class InCallTouchUi extends FrameLayout
                 } else if (mUseTabsLockscreen){
                     mIncomingSlidingTabCallWidget.clearAnimation();
                     mIncomingSlidingTabCallWidget.setVisibility(View.GONE);
+                } else if (mUseRingLockscreen){
+                    mIncomingRingSelectorCallWidget.clearAnimation();
+                    mIncomingRingSelectorCallWidget.setVisibility(View.GONE);
                 }
             }
         });
@@ -715,6 +789,8 @@ public class InCallTouchUi extends FrameLayout
             mIncomingRotarySelectorCallWidget.startAnimation(anim);
         } else if (mUseTabsLockscreen){
             mIncomingSlidingTabCallWidget.startAnimation(anim);
+        } else if (mUseRingLockscreen) {
+        	mIncomingRingSelectorCallWidget.startAnimation(anim);
         }
     }
 
@@ -731,7 +807,7 @@ public class InCallTouchUi extends FrameLayout
         mUseTabsLockscreen = (mLockscreenStyle == 1);
         mIncomingRotarySelectorCallWidget.setVisibility((mUseRotaryLockscreen) ? View.VISIBLE : View.GONE);
         mIncomingSlidingTabCallWidget.setVisibility((mUseTabsLockscreen) ? View.VISIBLE : View.GONE);
-
+        mIncomingRingSelectorCallWidget.setVisibility(mUseRingLockscreen ? View.VISIBLE : View.GONE);
 
 // tolemaC & Superatmel begin
         // Hide the incoming call screen with a transition
@@ -755,6 +831,9 @@ public class InCallTouchUi extends FrameLayout
                 } else if (mUseTabsLockscreen){
                     mIncomingSlidingTabCallWidget.clearAnimation();
                     mIncomingSlidingTabCallWidget.setVisibility(View.VISIBLE);
+                } else if (mUseRingLockscreen){
+                    mIncomingRingSelectorCallWidget.clearAnimation();
+                    mIncomingRingSelectorCallWidget.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -762,6 +841,8 @@ public class InCallTouchUi extends FrameLayout
             mIncomingRotarySelectorCallWidget.startAnimation(animAlpha);
         } else if (mUseTabsLockscreen){
             mIncomingSlidingTabCallWidget.startAnimation(animAlpha);
+        } else if (mUseRingLockscreen){
+        	mIncomingRingSelectorCallWidget.startAnimation(animAlpha);
         }
 // tolemaC & Superatmel end
 
@@ -772,6 +853,8 @@ public class InCallTouchUi extends FrameLayout
                     mIncomingRotarySelectorCallWidget.clearAnimation();
                 } else if (mUseTabsLockscreen){
                     mIncomingSlidingTabCallWidget.clearAnimation();
+                } else if (mUseRingLockscreen) {
+                    mIncomingRingSelectorCallWidget.clearAnimation();
                 }
             }
             if (mUseRotaryLockscreen) {
@@ -781,6 +864,9 @@ public class InCallTouchUi extends FrameLayout
             } else if (mUseTabsLockscreen){
                 mIncomingSlidingTabCallWidget.reset(false);
                 mIncomingSlidingTabCallWidget.setVisibility(View.VISIBLE);
+            } else if (mUseRingLockscreen) {
+                mIncomingRingSelectorCallWidget.reset(false);
+                mIncomingRingSelectorCallWidget.setVisibility(View.VISIBLE);
             }
     }
 
@@ -845,6 +931,22 @@ public class InCallTouchUi extends FrameLayout
                         hintTextResId = 0;
                         hintColorResId = 0;
                         break;
+                }
+            } else if (mUseRingLockscreen) {
+                switch (grabbedState) {
+                case RingSelector.OnRingTriggerListener.NO_RING:
+                    hintTextResId = 0;
+                    hintColorResId = 0;
+                    break;
+                case RingSelector.OnRingTriggerListener.MIDDLE_RING:
+                	// need to code some answer hints here.
+                    break;
+                default:
+                    Log.e(LOG_TAG, "onGrabbedStateChange: unexpected grabbedState: "
+                          + grabbedState);
+                    hintTextResId = 0;
+                    hintColorResId = 0;
+                    break;
                 }
             }
         }
