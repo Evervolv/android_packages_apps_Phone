@@ -713,4 +713,7 @@
     <string name="description_target_answer" msgid="7205604197797472471">"Responder"</string>
     <string name="description_target_send_sms" msgid="2098326025587950144">"Enviar SMS"</string>
     <string name="description_target_decline" msgid="4789834364389731957">"Recusar"</string>
+    <!-- Title/Summary displayed for the checkbox to (en|dis)able voicemail notifications. [CHAR LIMIT=NONE] -->
+    <string name="voicemail_notification_summary">"Ativar notificações para (novas) mensagens de voz"</string>
+    <string name="voicemail_notification_title">"Notificações de mensagem de voz"</string>
 </resources>

@@ -717,4 +717,7 @@
     <string name="description_target_answer" msgid="7205604197797472471">"Antworten"</string>
     <string name="description_target_send_sms" msgid="2098326025587950144">"SMS senden"</string>
     <string name="description_target_decline" msgid="4789834364389731957">"Ablehnen"</string>
+    <!-- Title/Summary displayed for the checkbox to (en|dis)able voicemail notifications. [CHAR LIMIT=NONE] -->
+    <string name="voicemail_notification_title">"Mailbox-Benachrichtigungen"</string>
+    <string name="voicemail_notification_summary">"Benachrichtigungen für (neue) Mailbox-Nachrichten einschalten"</string>
 </resources>

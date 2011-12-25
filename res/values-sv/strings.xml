@@ -719,4 +719,7 @@
     <string name="description_target_answer" msgid="7205604197797472471">"Svara"</string>
     <string name="description_target_send_sms" msgid="2098326025587950144">"Skicka SMS"</string>
     <string name="description_target_decline" msgid="4789834364389731957">"Avvisa"</string>
+    <!-- Title/Summary displayed for the checkbox to (en|dis)able voicemail notifications. [CHAR LIMIT=NONE] -->
+    <string name="voicemail_notification_title">"Aviseringar för röstbrevlåda"</string>
+    <string name="voicemail_notification_summary">"Aktivera aviseringar för (ny) röstbrevlåda"</string>
 </resources>

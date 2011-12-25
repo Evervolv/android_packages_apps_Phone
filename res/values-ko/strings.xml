@@ -713,4 +713,7 @@
     <string name="description_target_answer" msgid="7205604197797472471">"답변"</string>
     <string name="description_target_send_sms" msgid="2098326025587950144">"SMS 보내기"</string>
     <string name="description_target_decline" msgid="4789834364389731957">"거부"</string>
+    <!-- Title/Summary displayed for the checkbox to (en|dis)able voicemail notifications. [CHAR LIMIT=NONE] -->
+    <string name="voicemail_notification_title">"음성사서함 알림"</string>
+    <string name="voicemail_notification_summary">"새로운 음성사서함에 대한 알림을 표시합니다."</string>
 </resources>

@@ -717,4 +717,7 @@
     <string name="description_target_answer" msgid="7205604197797472471">"解答"</string>
     <string name="description_target_send_sms" msgid="2098326025587950144">"傳送簡訊"</string>
     <string name="description_target_decline" msgid="4789834364389731957">"拒絕"</string>
+    <!-- Title/Summary displayed for the checkbox to (en|dis)able voicemail notifications. [CHAR LIMIT=NONE] -->
+    <string name="voicemail_notification_title">語音信箱通知</string>
+    <string name="voicemail_notification_summary">當有（新）語音訊息時是否要作出通知</string>
 </resources>

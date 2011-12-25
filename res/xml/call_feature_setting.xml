@@ -73,6 +73,13 @@
                 android:singleLine="true"
                 android:autoText="false" />
       </PreferenceScreen>
+
+    <CheckBoxPreference
+        android:key="button_voicemail_notification"
+        android:title="@string/voicemail_notification_title"
+        android:summary="@string/voicemail_notification_summary"
+        android:persistent="false" />
+
   </PreferenceCategory>
 
   <PreferenceCategory android:key="button_misc_category_key"
