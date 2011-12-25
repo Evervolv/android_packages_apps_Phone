@@ -167,6 +167,12 @@ public class NotificationMgr implements CallerInfoAsyncQuery.OnQueryCompleteList
     }
 
     /**
+     */
+    static NotificationMgr getInstance() {
+        return sInstance;
+    }
+
+    /**
      * Helper class that's a wrapper around the framework's
      * StatusBarManager.disable() API.
      *
@@ -1169,7 +1175,11 @@ public class NotificationMgr implements CallerInfoAsyncQuery.OnQueryCompleteList
     /* package */ void updateMwi(boolean visible) {
         if (DBG) log("updateMwi(): " + visible);
 
-        if (visible) {
+        boolean notificationEnabled =
+            PreferenceManager.getDefaultSharedPreferences(mContext)
+              .getBoolean(CallFeaturesSetting.BUTTON_VOICEMAIL_NOTIFICATION_KEY, true);
+
+        if (visible && notificationEnabled) {
             int resId = android.R.drawable.stat_notify_voicemail;
 
             // This Notification can get a lot fancier once we have more

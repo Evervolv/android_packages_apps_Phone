@@ -98,6 +98,12 @@
           android:entryValues="@array/voicemail_notification_vibrate_when_values"
           android:defaultValue="@string/voicemail_notification_vibrate_when_default"
           android:dialogTitle="@string/voicemail_notification_vibarte_when_dialog_title" />
+
+      <CheckBoxPreference
+          android:key="button_voicemail_notification"
+          android:title="@string/voicemail_notification_title"
+          android:persistent="false" />
+
   </PreferenceScreen>
 
   <CheckBoxPreference

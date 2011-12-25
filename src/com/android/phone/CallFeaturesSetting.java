@@ -173,6 +173,10 @@ public class CallFeaturesSetting extends PreferenceActivity
     private static final String BUTTON_TTY_KEY         = "button_tty_mode_key";
     private static final String BUTTON_HAC_KEY         = "button_hac_key";
 
+    /** @hide */
+    public static final String BUTTON_VOICEMAIL_NOTIFICATION_KEY =
+            "button_voicemail_notification";
+
     private static final String BUTTON_GSM_UMTS_OPTIONS = "button_gsm_more_expand_key";
     private static final String BUTTON_CDMA_OPTIONS = "button_cdma_more_expand_key";
 
@@ -255,6 +259,7 @@ public class CallFeaturesSetting extends PreferenceActivity
     private CheckBoxPreference mVibrateWhenRinging;
     /** Whether dialpad plays DTMF tone or not. */
     private CheckBoxPreference mPlayDtmfTone;
+    private CheckBoxPreference mButtonNotifications;
     private CheckBoxPreference mButtonAutoRetry;
     private CheckBoxPreference mButtonHAC;
     private ListPreference mButtonDTMF;
@@ -481,6 +486,8 @@ public class CallFeaturesSetting extends PreferenceActivity
             return true;
         } else if (preference == mButtonTTY) {
             return true;
+        } else if (preference == mButtonNotifications) {
+            return true;
         } else if (preference == mButtonAutoRetry) {
             android.provider.Settings.System.putInt(mPhone.getContext().getContentResolver(),
                     android.provider.Settings.System.CALL_AUTO_RETRY,
@@ -552,6 +559,8 @@ public class CallFeaturesSetting extends PreferenceActivity
             int mwi_notification = mMwiNotification.isChecked() ? 1 : 0;
             Settings.System.putInt(mPhone.getContext().getContentResolver(),
                     Settings.System.ENABLE_MWI_NOTIFICATION, mwi_notification);
+        } else if (preference == mButtonNotifications) {
+            handleNotificationChange(objValue);
         } else if (preference == mVoicemailProviders) {
             final String newProviderKey = (String) objValue;
             if (DBG) {
@@ -594,6 +603,18 @@ public class CallFeaturesSetting extends PreferenceActivity
         }
         // always let the preference setting proceed.
         return true;
+    }
+
+    private void handleNotificationChange(Object objValue) {
+        boolean newValue = Boolean.parseBoolean(objValue.toString());
+
+        Editor editor = mButtonNotifications.getEditor();
+        editor.putBoolean(BUTTON_VOICEMAIL_NOTIFICATION_KEY, newValue);
+        editor.commit();
+
+        // if the new value is true and there's a message, show the notification
+        boolean visible = mPhone.getMessageWaitingIndicator() && newValue;
+        NotificationMgr.getInstance().updateMwi(visible);
     }
 
     @Override
@@ -1523,6 +1544,7 @@ public class CallFeaturesSetting extends PreferenceActivity
             }
         }
 
+        mButtonNotifications = (CheckBoxPreference) findPreference(BUTTON_VOICEMAIL_NOTIFICATION_KEY);
         mButtonDTMF = (ListPreference) findPreference(BUTTON_DTMF_KEY);
         mButtonAutoRetry = (CheckBoxPreference) findPreference(BUTTON_RETRY_KEY);
         mButtonHAC = (CheckBoxPreference) findPreference(BUTTON_HAC_KEY);
@@ -1551,6 +1573,15 @@ public class CallFeaturesSetting extends PreferenceActivity
         if (mPlayDtmfTone != null) {
             mPlayDtmfTone.setChecked(Settings.System.getInt(getContentResolver(),
                     Settings.System.DTMF_TONE_WHEN_DIALING, 1) != 0);
+        }
+
+        if (mButtonNotifications != null) {
+            if (getResources().getBoolean(R.bool.voicemail_notification_enabled)) {
+                mButtonNotifications.setOnPreferenceChangeListener(this);
+            } else {
+                prefSet.removePreference(mButtonNotifications);
+                mButtonNotifications = null;
+            }
         }
 
         if (mButtonDTMF != null) {
@@ -1743,7 +1774,13 @@ public class CallFeaturesSetting extends PreferenceActivity
         if (mMwiNotification != null) {
             int mwi_notification = Settings.System.getInt(getContentResolver(), Settings.System.ENABLE_MWI_NOTIFICATION, 0);
             mMwiNotification.setChecked(mwi_notification != 0);
+        }
 
+        if (mButtonNotifications != null) {
+            boolean notification =
+                mButtonNotifications.getSharedPreferences()
+                  .getBoolean(BUTTON_VOICEMAIL_NOTIFICATION_KEY, true);
+            mButtonNotifications.setChecked(notification);
         }
 
         if (mButtonDTMF != null) {
