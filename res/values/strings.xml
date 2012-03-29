@@ -1599,10 +1599,8 @@
     <!-- Description of the decline on target in the Slide unlock screen. [CHAR LIMIT=NONE] -->
     <string name="description_target_decline">Decline</string>
 
-<<<<<<< HEAD
     <string name="phone_number_label">My phone number</string>
     <string name="phone_number_summary">Set the phone number for this device</string>
-=======
     <!-- Dialog title for the vibration settings for voicemail notifications [CHAR LIMIT=40] -->
     <string name="voicemail_notification_vibrate_when_title" msgid="8731372580674292759">Vibrate</string>
     <!-- Dialog title for the vibration settings for voice mail notifications [CHAR LIMIT=40]-->
@@ -1627,5 +1625,4 @@
         <item>silent</item>
         <item>never</item>
     </string-array>
->>>>>>> refs/tags/android-4.0.4_r1.1
 </resources>

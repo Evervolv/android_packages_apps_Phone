@@ -717,11 +717,9 @@
     <string name="description_target_answer" msgid="7205604197797472471">"Responder"</string>
     <string name="description_target_send_sms" msgid="2098326025587950144">"Enviar SMS"</string>
     <string name="description_target_decline" msgid="4789834364389731957">"Rechazar"</string>
-<<<<<<< HEAD
     <!-- Title/Summary displayed for the checkbox to (en|dis)able voicemail notifications. [CHAR LIMIT=NONE] -->
     <string name="voicemail_notification_title">"Notificaciones de correo de voz"</string>
     <string name="voicemail_notification_summary">"Habilitar las notificaciones para (nuevos) mensajes de voz"</string>
-=======
     <string name="voicemail_notification_vibrate_when_title" msgid="8361970092063604886">"Vibrar"</string>
     <string name="voicemail_notification_vibarte_when_dialog_title" msgid="5739583146522136440">"Vibración"</string>
   <string-array name="voicemail_notification_vibrate_when_entries">
@@ -729,5 +727,4 @@
     <item msgid="1595097872875714252">"Solo en modo silencio"</item>
     <item msgid="1458182414036878616">"Nunca"</item>
   </string-array>
->>>>>>> refs/tags/android-4.0.4_r1.1
 </resources>

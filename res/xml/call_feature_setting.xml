@@ -73,7 +73,6 @@
                 android:singleLine="true"
                 android:autoText="false" />
       </PreferenceScreen>
-<<<<<<< HEAD
 
     <CheckBoxPreference
         android:key="button_voicemail_notification"
@@ -81,7 +80,6 @@
         android:summary="@string/voicemail_notification_summary"
         android:persistent="false" />
 
-=======
       <ListPreference
           android:key="button_voicemail_notification_vibrate_when_key"
           android:title="@string/voicemail_notification_vibrate_when_title"
@@ -90,7 +88,6 @@
           android:entryValues="@array/voicemail_notification_vibrate_when_values"
           android:defaultValue="@string/voicemail_notification_vibrate_when_default"
           android:dialogTitle="@string/voicemail_notification_vibarte_when_dialog_title" />
->>>>>>> refs/tags/android-4.0.4_r1.1
   </PreferenceCategory>
 
   <PreferenceCategory android:key="button_misc_category_key"
