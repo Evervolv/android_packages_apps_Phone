@@ -713,7 +713,17 @@
     <string name="description_target_answer" msgid="7205604197797472471">"Відповісти"</string>
     <string name="description_target_send_sms" msgid="2098326025587950144">"Надіслати SMS"</string>
     <string name="description_target_decline" msgid="4789834364389731957">"Відхилити"</string>
+<<<<<<< HEAD
     <!-- Title/Summary displayed for the checkbox to (en|dis)able voicemail notifications. [CHAR LIMIT=NONE] -->
     <string name="voicemail_notification_title">"Сповіщення голосової пошти"</string>
     <string name="voicemail_notification_summary">"Увімкнення сповіщень про (нові) голосові листи"</string>
+=======
+    <string name="voicemail_notification_vibrate_when_title" msgid="8361970092063604886">"Вібросигнал"</string>
+    <string name="voicemail_notification_vibarte_when_dialog_title" msgid="5739583146522136440">"Вібросигнал"</string>
+  <string-array name="voicemail_notification_vibrate_when_entries">
+    <item msgid="468237575962916558">"Завжди"</item>
+    <item msgid="1595097872875714252">"Лише в беззвуч. реж."</item>
+    <item msgid="1458182414036878616">"Ніколи"</item>
+  </string-array>
+>>>>>>> refs/tags/android-4.0.4_r1.1
 </resources>
