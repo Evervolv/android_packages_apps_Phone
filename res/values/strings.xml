@@ -167,6 +167,10 @@
     <string name="settings_label">Network settings</string>
     <!-- Call settings screen, setting option name -->
     <string name="voicemail">Voicemail</string>
+    <!-- Call settings screen, message wait indicator name -->
+    <string name="mwi_notification_title">Message Wait Indicator</string>
+    <!-- Call settings screen, message wait indicator summary -->
+    <string name="mwi_notification_summary">Show message wait indicator voicemail notifications</string>
     <!-- Call forwarding dialog box, voicemail number prefix -->
     <string name="voicemail_abbreviated">VM:</string>
     <!-- Mobile network settings screen, setting option name -->
@@ -406,6 +410,34 @@
         <item>"1"</item>
         <item>"0"</item>
     </string-array>
+
+    <!-- Mobile network settings, network mode choices for a device supporting CDMA and LTE [CHAR LIMIT=25] -->
+    <string-array name="preferred_network_mode_choices_lte">
+    <!--<item>LTE only</item>-->
+        <item>LTE/CMDA/EvDo/GSM/WCDMA</item>
+        <item>LTE/CDMA/EvDo</item>
+        <item>LTE/CDMA</item>
+        <item>CDMA/EvDo auto</item>
+    </string-array>
+    <string-array name="preferred_network_mode_values_lte" translatable="false">
+    <!--<item>"11"</item>-->
+        <item>"10"</item>
+        <item>"8"</item>
+        <item>"7"</item>
+        <item>"4"</item>
+    </string-array>
+    <!-- Mobile network settings, network mode choices for a device supporting GSM and LTE [CHAR LIMIT=25] -->
+    <string-array name="preferred_network_mode_choices_lte_gsm">
+        <item>LTE/WCDMA</item>
+        <item>LTE/GSM/WCDMA</item>
+        <item>GSM/WCDMA preferred</item>
+    </string-array>
+    <string-array name="preferred_network_mode_values_lte_gsm" translatable="false">
+        <item>"12"</item>
+        <item>"9"</item>
+        <item>"0"</item>
+    </string-array>
+
     <!-- Mobile network settings screen, data enabling checkbox name -->
     <string name="data_enabled">Data enabled</string>
     <!-- Mobile network settings screen, setting summary text when check box is not selected (explains what selecting it would do) -->
@@ -1075,6 +1107,13 @@
 
     <!-- Title displayed above settings coming after voicemail in the call features screen -->
     <string name="other_settings">Other call settings</string>
+
+    <!-- Label for onscreen "Dial" button used in the EmergencyDialer -->
+    <string name="dial_button_label">Dial</string>
+
+    <!-- Dialer UI Settings -->
+    <string name="dialer_ui_settings_title">Dialpad settings</string>
+    <string name="dialer_ui_settings_summary">Settings for the dialpad</string>
 
     <!-- Title displayed in the overlay when a call is placed using a 3rd party provider.
          [CHAR LIMIT=40] -->
